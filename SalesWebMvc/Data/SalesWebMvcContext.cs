@@ -9,5 +9,7 @@ namespace SalesWebMvc.Data
         public SalesWebMvcContext(DbContextOptions<SalesWebMvcContext> options) : base(options) { }
 
         public DbSet<Department> Department { get; set; } = default!;
+        public DbSet<Seller> Sellers { get; set; } = default!;
+        public DbSet<SalesRecord> SalesRecords { get; set; } = default!;
     }
 }
