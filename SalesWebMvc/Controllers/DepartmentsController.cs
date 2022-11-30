@@ -86,7 +86,7 @@ namespace SalesWebMvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Department department)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Department department)
         {
             if (id != department.Id)
             {
@@ -117,7 +117,7 @@ namespace SalesWebMvc.Controllers
         }
 
         // GET: Departments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null || _context.Department == null)
             {
@@ -137,7 +137,7 @@ namespace SalesWebMvc.Controllers
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             if (_context.Department == null)
             {
@@ -153,7 +153,7 @@ namespace SalesWebMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartmentExists(int id)
+        private bool DepartmentExists(long id)
         {
           return _context.Department.Any(e => e.Id == id);
         }
