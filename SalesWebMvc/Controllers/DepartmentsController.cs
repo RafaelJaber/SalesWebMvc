@@ -26,7 +26,7 @@ namespace SalesWebMvc.Controllers
         }
 
         // GET: Departments/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null || _context.Department == null)
             {
@@ -66,7 +66,7 @@ namespace SalesWebMvc.Controllers
         }
 
         // GET: Departments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null || _context.Department == null)
             {
