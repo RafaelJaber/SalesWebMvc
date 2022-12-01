@@ -1,0 +1,64 @@
+﻿@model SalesWebMvc.Models.Seller
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card text-white bg-secondary">
+    <div class="card-header">
+        <h4>Seller Form</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="POST" id="form-seller">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group has-success">
+                        <label class="form-label mt-4" asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group has-success">
+                        <label class="form-label mt-4" asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group has-success">
+                        <label class="form-label mt-4" asp-for="BirthDate"></label>
+                        <input asp-for="BirthDate" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group has-success">
+                        <label class="form-label mt-4" asp-for="BaseSalary"></label>
+                        <input asp-for="BaseSalary" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div class="btn btn-secondary" style="width: 150px">Cancel</div>
+            </div>
+            <div class="col-md-5">
+                <div class="btn btn-success" style="width: 150px" type="submit" onclick="sendFormSeller()">Save</div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function sendFormSeller() {
+        document.getElementById("form-seller").submit();
+    }
+</script>
