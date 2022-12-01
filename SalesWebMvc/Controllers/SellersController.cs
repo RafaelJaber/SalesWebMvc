@@ -28,7 +28,7 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Details(long? id)
         {
-            if (id == null) return RedirectToAction(nameof(Error), new {message = "ID not provided"});
+            if (id == null) return RedirectToAction(nameof(Error), new { message = "ID not provided" });
 
             var obj = _sellerService.FindById(id.Value);
             if (obj == null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -54,7 +54,12 @@ namespace SalesWebMvc.Controllers
         public IActionResult Edit(long id, Seller seller)
         {
             if (id != seller.Id) return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
-
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Departments = departments, Seller = seller };
+                return View(viewModel);
+            }
             try
             {
                 _sellerService.Update(seller);
@@ -62,7 +67,7 @@ namespace SalesWebMvc.Controllers
             }
             catch (NotFoundException e)
             {
-                return RedirectToAction(nameof(Error), new { message =  e.Message});
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
             catch (DbConcurrencyException e)
             {
@@ -81,6 +86,12 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Departments = departments, Seller = seller }; 
+                return View(viewModel);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }

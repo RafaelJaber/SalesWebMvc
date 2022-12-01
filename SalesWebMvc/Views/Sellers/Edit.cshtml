@@ -17,12 +17,15 @@
                     <div class="form-floating mb-3">
                         <input class="form-control" asp-for="Seller.Name" placeholder="Name">
                         <label asp-for="Seller.Name"></label>
+                        <span asp-validation-for="Seller.Name" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
                         <input class="form-control" asp-for="Seller.Email" placeholder="Email">
                         <label asp-for="Seller.Email"></label>
+                        <span asp-validation-for="Seller.Email" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -31,12 +34,14 @@
                     <div class="form-floating mb-3">
                         <input class="form-control" asp-for="Seller.BirthDate" placeholder="BirthDate">
                         <label asp-for="Seller.BirthDate"></label>
+                        <span asp-validation-for="Seller.BirthDate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
                         <input class="form-control" asp-for="Seller.BaseSalary" placeholder="BaseSalary">
                         <label asp-for="Seller.BaseSalary"></label>
+                        <span asp-validation-for="Seller.BaseSalary" class="text-danger"></span>
                     </div>
                 </div>
             </div>
