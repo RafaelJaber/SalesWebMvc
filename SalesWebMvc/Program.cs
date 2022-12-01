@@ -1,14 +1,29 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using SalesWebMvc.Data;
+using Microsoft.AspNetCore.Localization;
 using SalesWebMvc.Data.Seeders;
 using SalesWebMvc.Services;
+using System.Globalization;
+using SalesWebMvc.Data;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SalesWebMvcContext>(
     options => options
         .UseSqlServer(builder.Configuration.GetConnectionString("SalesWebMvcContext")
         ?? throw new InvalidOperationException("Connection string 'SalesWebMvcContext' not found.")));
+
+// Location
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var culture = new List<CultureInfo> {
+        new CultureInfo("en-US"),
+        new CultureInfo("pt-BR")
+    };
+    //options.DefaultRequestCulture = new RequestCulture(culture[0]);
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = culture;
+    options.SupportedUICultures = culture;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -27,6 +42,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedingService>().Seed();
+
+app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
