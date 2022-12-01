@@ -1,0 +1,78 @@
+﻿@model SalesWebMvc.Models.ViewModels.SellerFormViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card text-white bg-secondary">
+    <div class="card-header">
+        <h4>Seller Form</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit" method="POST" id="form-seller">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.Name" placeholder="Name">
+                        <label asp-for="Seller.Name"></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.Email" placeholder="Email">
+                        <label asp-for="Seller.Email"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.BirthDate" placeholder="BirthDate">
+                        <label asp-for="Seller.BirthDate"></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.BaseSalary" placeholder="BaseSalary">
+                        <label asp-for="Seller.BaseSalary"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="form-group mb-3">
+                        <label asp-for="Seller.Department"></label>
+                        <select class="form-select"
+                                asp-for="Seller.DepartmentId"
+                                asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <input type="hidden" asp-for="Seller.Id"/>
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <a class="btn btn-secondary" style="width: 150px" asp-action="Index">Cancel</a>
+            </div>
+            <div class="col-md-5">
+                <div class="btn btn-success" style="width: 150px" type="submit" onclick="sendFormSeller()">Save</div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function sendFormSeller() {
+        document.getElementById("form-seller").submit();
+    }
+</script>

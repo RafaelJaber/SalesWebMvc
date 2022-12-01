@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
+using SalesWebMvc.Services.Exceptions;
 
 namespace SalesWebMvc.Controllers
 {
@@ -32,6 +33,40 @@ namespace SalesWebMvc.Controllers
             if (obj == null) return NotFound();
 
             return View(obj);
+        }
+
+        public IActionResult Edit(long? id)
+        {
+            if (id == null) return NotFound();
+
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null) return NotFound();
+
+            List<Department> departments = _departmentService.FindAll();
+            SellerFormViewModel viewModel = new SellerFormViewModel { Departments = departments, Seller = obj };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(long id, Seller seller)
+        {
+            if (id != seller.Id) return BadRequest();
+
+            try
+            {
+                _sellerService.Update(seller);
+                return RedirectToAction("Index");
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
         }
 
         public IActionResult Create()
