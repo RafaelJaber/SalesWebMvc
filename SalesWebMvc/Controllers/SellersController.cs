@@ -24,6 +24,16 @@ namespace SalesWebMvc.Controllers
             return View(list);
         }
 
+        public IActionResult Details(long? id)
+        {
+            if (id == null) return NotFound();
+
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null) return NotFound();
+
+            return View(obj);
+        }
+
         public IActionResult Create()
         {
             var departments = _departmentService.FindAll();
