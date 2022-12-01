@@ -1,0 +1,57 @@
+﻿@model SalesWebMvc.Models.Seller
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Are you sure you wnat to delete this?</h3>
+        <h4>Seller</h4>
+
+    </div>
+    <div class="card-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd>@Html.DisplayFor(model => model.Email)</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.BirthDate)</dt>
+            <dd>@Html.DisplayFor(model => model.BirthDate)</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.BaseSalary)</dt>
+            <dd>@Html.DisplayFor(model => model.BaseSalary)</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-center">
+        <form asp-action="Delete" method="POST">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <a asp-action="Index" class="btn btn-secondary btn-min-width">
+                        <i class="bi bi-caret-left-fill"></i>
+                        Back to List
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-danger btn-min-width">
+                        <i class="bi bi-trash-fill"></i>
+                        Delete
+                    </button>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <input type="hidden" asp-for="Id" />
+
+
+        </form>
+    </div>
+</div>
+
