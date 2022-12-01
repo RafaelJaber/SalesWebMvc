@@ -1,4 +1,4 @@
-﻿@model SalesWebMvc.Models.Seller
+﻿@model SalesWebMvc.Models.ViewModels.SellerFormViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -14,31 +14,44 @@
         <form asp-action="Create" method="POST" id="form-seller">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group has-success">
-                        <label class="form-label mt-4" asp-for="Name"></label>
-                        <input asp-for="Name" class="form-control">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.Name" placeholder="Name">
+                        <label asp-for="Seller.Name"></label>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group has-success">
-                        <label class="form-label mt-4" asp-for="Email"></label>
-                        <input asp-for="Email" class="form-control">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.Email" placeholder="Email">
+                        <label asp-for="Seller.Email"></label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group has-success">
-                        <label class="form-label mt-4" asp-for="BirthDate"></label>
-                        <input asp-for="BirthDate" class="form-control">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.BirthDate" placeholder="BirthDate">
+                        <label asp-for="Seller.BirthDate"></label>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group has-success">
-                        <label class="form-label mt-4" asp-for="BaseSalary"></label>
-                        <input asp-for="BaseSalary" class="form-control">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Seller.BaseSalary" placeholder="BaseSalary">
+                        <label asp-for="Seller.BaseSalary"></label>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="form-group mb-3">
+                        <label asp-for="Seller.Department"></label>
+                        <select class="form-select"
+                                asp-for="Seller.DepartmentId"
+                                asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
             </div>
         </form>
     </div>
