@@ -29,6 +29,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SellerService>();
 builder.Services.AddScoped<DepartmentService>();
+builder.Services.AddScoped<SalesRecordService>();
 
 builder.Services.AddScoped<SeedingService>();
 
