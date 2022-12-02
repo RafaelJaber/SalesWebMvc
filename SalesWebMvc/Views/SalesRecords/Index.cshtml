@@ -34,3 +34,34 @@
         </form>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="GroupingSearch">
+            <fieldset>
+                <legend>Grouping search</legend>
+                <div class="form-group">
+                    <dic class="row">
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="MinDate" name="minDate" type="date"/>
+                                <label>Min Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="MaxDate" name="maxDate" type="date"/>
+                                <label>Max Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </dic>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
