@@ -15,33 +15,34 @@ namespace SalesWebMvc.Services
             _context = context;
         }
 
-        public List<Seller> FindAll()
+        public async Task<List<Seller>> FindAllAsync()
         {
-            return _context.Sellers.ToList();
+            return await _context.Sellers.ToListAsync();
         }
 
-        public Seller FindById(long id)
+        public async Task<Seller> FindByIdAsync(long id)
         {
-            var seller = _context.Sellers
+            Seller? seller = await _context.Sellers
                 .Include(obj => obj.Department)
-                .FirstOrDefault(obj => obj.Id == id);
+                .FirstOrDefaultAsync(obj => obj.Id == id);
             if (seller == null) return null;
             return seller;
         }
 
-        public void Insert(Seller obj)
+        public async Task InsertAsync (Seller obj)
         {
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();    
         }
 
-        public void Update(Seller obj)
+        public async Task UpdateAsync(Seller obj)
         {
-            if (!_context.Sellers.Any(x => x.Id == obj.Id)) throw new NotFoundException("Id not found");
+            bool hasAny = await _context.Sellers.AnyAsync(x => x.Id == obj.Id);
+            if (!hasAny) throw new NotFoundException("Id not found");
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -49,11 +50,11 @@ namespace SalesWebMvc.Services
             }
         }
 
-        public void Delete(long id)
+        public async Task DeleteAsync(long id)
         {
-            var obj = _context.Sellers.Find(id);
+            Seller? obj = await _context.Sellers.FindAsync(id);
             _context.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
