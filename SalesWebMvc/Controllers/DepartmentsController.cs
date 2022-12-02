@@ -8,10 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
 
-namespace SalesWebMvc.Controllers
-{
-    public class DepartmentsController : Controller
-    {
+namespace SalesWebMvc.Controllers {
+    public class DepartmentsController : Controller {
         private readonly SalesWebMvcContext _context;
 
         public DepartmentsController(SalesWebMvcContext context)
@@ -22,21 +20,19 @@ namespace SalesWebMvc.Controllers
         // GET: Departments
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Department.ToListAsync());
+            return View(await _context.Department.ToListAsync());
         }
 
         // GET: Departments/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null || _context.Department == null)
-            {
+            if (id == null || _context.Department == null){
                 return NotFound();
             }
 
             var department = await _context.Department
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (department == null)
-            {
+            if (department == null){
                 return NotFound();
             }
 
@@ -56,8 +52,7 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Department department)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid){
                 _context.Add(department);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -68,14 +63,12 @@ namespace SalesWebMvc.Controllers
         // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null || _context.Department == null)
-            {
+            if (id == null || _context.Department == null){
                 return NotFound();
             }
 
             var department = await _context.Department.FindAsync(id);
-            if (department == null)
-            {
+            if (department == null){
                 return NotFound();
             }
             return View(department);
@@ -88,26 +81,20 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Department department)
         {
-            if (id != department.Id)
-            {
+            if (id != department.Id){
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid){
+                try{
                     _context.Update(department);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DepartmentExists(department.Id))
-                    {
+                catch (DbUpdateConcurrencyException){
+                    if (!DepartmentExists(department.Id)){
                         return NotFound();
                     }
-                    else
-                    {
+                    else{
                         throw;
                     }
                 }
@@ -119,15 +106,13 @@ namespace SalesWebMvc.Controllers
         // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null || _context.Department == null)
-            {
+            if (id == null || _context.Department == null){
                 return NotFound();
             }
 
             var department = await _context.Department
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (department == null)
-            {
+            if (department == null){
                 return NotFound();
             }
 
@@ -139,23 +124,21 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            if (_context.Department == null)
-            {
+            if (_context.Department == null){
                 return Problem("Entity set 'SalesWebMvcContext.Department'  is null.");
             }
             var department = await _context.Department.FindAsync(id);
-            if (department != null)
-            {
+            if (department != null){
                 _context.Department.Remove(department);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DepartmentExists(long id)
         {
-          return _context.Department.Any(e => e.Id == id);
+            return _context.Department.Any(e => e.Id == id);
         }
     }
 }

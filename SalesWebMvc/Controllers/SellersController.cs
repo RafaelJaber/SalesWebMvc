@@ -6,10 +6,10 @@ using SalesWebMvc.Services;
 using SalesWebMvc.Services.Exceptions;
 using System.Diagnostics;
 
-namespace SalesWebMvc.Controllers
-{
-    public class SellersController : Controller
-    {
+namespace SalesWebMvc.Controllers {
+    using Microsoft.EntityFrameworkCore;
+
+    public class SellersController : Controller {
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
 
@@ -54,23 +54,19 @@ namespace SalesWebMvc.Controllers
         public async Task<IActionResult> Edit(long id, Seller seller)
         {
             if (id != seller.Id) return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid){
                 var departments = await _departmentService.FindAllAsync();
                 SellerFormViewModel viewModel = new SellerFormViewModel { Departments = departments, Seller = seller };
                 return View(viewModel);
             }
-            try
-            {
+            try{
                 await _sellerService.UpdateAsync(seller);
                 return RedirectToAction("Index");
             }
-            catch (NotFoundException e)
-            {
+            catch (NotFoundException e){
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch (DbConcurrencyException e)
-            {
+            catch (DbConcurrencyException e){
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
         }
@@ -86,10 +82,9 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Seller seller)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid){
                 var departments = await _departmentService.FindAllAsync();
-                SellerFormViewModel viewModel = new SellerFormViewModel { Departments = departments, Seller = seller }; 
+                SellerFormViewModel viewModel = new SellerFormViewModel { Departments = departments, Seller = seller };
                 return View(viewModel);
             }
             await _sellerService.InsertAsync(seller);
@@ -110,8 +105,13 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(long id)
         {
-            await _sellerService.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            try{
+                await _sellerService.DeleteAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException e){
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
+            }
         }
 
         public IActionResult Error(string message)
